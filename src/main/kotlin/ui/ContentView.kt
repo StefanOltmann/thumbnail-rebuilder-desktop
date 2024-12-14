@@ -20,6 +20,7 @@
 package ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,8 +32,24 @@ fun ContentView() {
 
     val filesImported = remember { mutableStateOf(false) }
 
+    val files = remember { mutableListOf<String>() }
+
+    val onFilesImport: (List<String>) -> Unit = {
+
+        println(it)
+
+        files.clear()
+        files.addAll(it)
+
+        filesImported.value = true
+    }
+
     if (!filesImported.value) {
 
-        ImportScreen()
+        ImportScreen(onFilesImport)
+
+    } else {
+
+        Text(files.toString())
     }
 }

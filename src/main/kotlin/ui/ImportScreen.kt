@@ -55,7 +55,9 @@ import ui.theme.doubleSpacing
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun ImportScreen() {
+fun ImportScreen(
+    onFilesImport: (List<String>) -> Unit
+) {
 
     Column(
         verticalArrangement = Arrangement.spacedBy(doubleSpacing),
@@ -83,19 +85,12 @@ fun ImportScreen() {
 
                 override fun onDrop(event: DragAndDropEvent): Boolean {
 
-                    var result = false
-
                     val fileList = event.dragData() as? DragData.FilesList
 
-                    if (fileList != null) {
+                    if (fileList != null)
+                        onFilesImport(fileList.readFiles())
 
-                        println("Files dropped:")
-                        println(fileList.readFiles())
-
-                        result = true
-                    }
-
-                    return result
+                    return true
                 }
             }
         }
