@@ -19,39 +19,20 @@
 
 package ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import ui.theme.AppTypography
-import ui.theme.appColorScheme
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun App() {
+fun ContentView() {
 
-    MaterialTheme(
-        colorScheme = appColorScheme,
-        typography = AppTypography()
-    ) {
+    val filesImported = remember { mutableStateOf(false) }
 
-        Column {
+    if (!filesImported.value) {
 
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .weight(1F)
-                    .fillMaxSize()
-            ) {
-
-                ContentView()
-            }
-
-            Footer()
-        }
+        ImportScreen()
     }
 }
