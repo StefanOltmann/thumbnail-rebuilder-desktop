@@ -81,49 +81,59 @@ fun ContentView() {
 
     } else {
 
-        val lazyListState = rememberLazyListState()
-
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-
-            LazyColumn(
-                state = lazyListState,
-                modifier = Modifier.halfPadding()
-            ) {
-
-                items(files) { file ->
-
-                    Box(
-                        modifier = Modifier
-                            .halfPadding()
-                            .background(
-                                MaterialTheme.colorScheme.surface,
-                                defaultRoundedCornerShape
-                            )
-                            .fillMaxWidth()
-                            .height(48.dp)
-                    ) {
-
-                        Text(
-                            text = file.path,
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-
-
-                }
-            }
-
-            VerticalScrollbar(
-                adapter = rememberScrollbarAdapter(lazyListState),
-                modifier = Modifier.fillMaxHeight().align(Alignment.CenterEnd),
-                style = defaultScrollbarStyle().copy(
-                    unhoverColor = lightGray.copy(alpha = 0.4f),
-                    hoverColor = lightGray
-                )
-            )
-        }
+        FileList(files)
     }
 }
+
+@Composable
+fun FileList(
+    files: List<File>
+) {
+
+    val lazyListState = rememberLazyListState()
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier.halfPadding()
+        ) {
+
+            items(files) { file ->
+
+                Box(
+                    modifier = Modifier
+                        .halfPadding()
+                        .background(
+                            MaterialTheme.colorScheme.surface,
+                            defaultRoundedCornerShape
+                        )
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+
+                    Text(
+                        text = file.path,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+
+
+            }
+        }
+
+        VerticalScrollbar(
+            adapter = rememberScrollbarAdapter(lazyListState),
+            modifier = Modifier.fillMaxHeight().align(Alignment.CenterEnd),
+            style = defaultScrollbarStyle().copy(
+                unhoverColor = lightGray.copy(alpha = 0.4f),
+                hoverColor = lightGray
+            )
+        )
+    }
+}
+
+
