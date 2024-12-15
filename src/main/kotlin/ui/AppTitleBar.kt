@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
@@ -66,9 +67,10 @@ fun WindowScope.AppTitleBar(
             modifier = Modifier
                 .height(32.dp)
                 .background(Color.Black)
+                .padding(
+                    horizontal = 2.dp
+                )
         ) {
-
-            HalfSpacer()
 
             Icon(
                 imageVector = AppIcon,
@@ -107,8 +109,6 @@ fun WindowScope.AppTitleBar(
                 imageVector = IconClose,
                 onClick = exitApplication
             )
-
-            HalfSpacer()
         }
     }
 }

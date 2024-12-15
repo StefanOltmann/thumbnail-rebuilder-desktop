@@ -2,6 +2,8 @@
 
 [![Kotlin](https://img.shields.io/badge/kotlin-2.0.21-blue.svg?logo=kotlin)](httpw://kotlinlang.org)
 
+**Project is a work in progress and not usable yet!**
+
 This is a tool to repair embedded thumbnails in images.
 
 ## Contributions

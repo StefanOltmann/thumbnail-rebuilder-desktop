@@ -23,7 +23,9 @@ import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.defaultScrollbarStyle
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -75,13 +77,26 @@ fun ContentView() {
         files = tempFiles.toList()
     }
 
-    if (files.isEmpty()) {
+    Column {
 
-        ImportScreen(onFilesImport)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1F)
+        ) {
 
-    } else {
+            if (files.isEmpty()) {
 
-        FileList(files)
+                ImportScreen(onFilesImport)
+
+            } else {
+
+                FileList(files)
+            }
+        }
+
+        SettingsPanel()
     }
 }
 
@@ -117,11 +132,10 @@ fun FileList(
 
                     Text(
                         text = file.path,
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
-
-
             }
         }
 
