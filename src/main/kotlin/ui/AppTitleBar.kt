@@ -20,12 +20,15 @@
 package ui
 
 import APP_TITLE
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
@@ -34,14 +37,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowScope
 import androidx.compose.ui.window.WindowState
 import ui.icons.AppIcon
+import ui.icons.FooterGraphic
 import ui.icons.IconClose
 import ui.icons.IconMaximize
 import ui.icons.IconMinimize
+import ui.theme.DefaultSpacer
+import ui.theme.DoubleSpacer
 import ui.theme.FillSpacer
 import ui.theme.halfSpacing
 
@@ -73,11 +80,25 @@ fun WindowScope.AppTitleBar(
             Text(
                 text = APP_TITLE,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                ),
                 modifier = Modifier.offset(y = -1.dp)
             )
 
             FillSpacer()
+
+            Image(
+                imageVector = FooterGraphic,
+                contentDescription = null,
+                modifier = Modifier
+                    .height(20.dp)
+                    .offset(y = 1.dp)
+            )
+
+            Spacer(
+                modifier = Modifier.width(32.dp)
+            )
 
             ClickableIcon(
                 imageVector = IconMinimize,

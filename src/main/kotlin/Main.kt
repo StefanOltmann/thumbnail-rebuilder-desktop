@@ -32,7 +32,6 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import ui.AppTitleBar
 import ui.ContentView
-import ui.Footer
 import ui.theme.AppTypography
 import ui.theme.appColorScheme
 import ui.theme.defaultRoundedCornerShape
@@ -75,17 +74,7 @@ fun main() = application {
                     ::exitApplication
                 )
 
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .weight(1F)
-                        .fillMaxSize()
-                ) {
-
                     ContentView()
-                }
-
-                Footer()
             }
         }
     }
