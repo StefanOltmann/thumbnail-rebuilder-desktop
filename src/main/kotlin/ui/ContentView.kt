@@ -19,8 +19,15 @@
 
 package ui
 
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.defaultScrollbarStyle
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,8 +35,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.ashampoo.kim.common.exists
-import kotlinx.io.files.Path
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import ui.theme.lightGray
 import ui.util.cleanPath
 import java.io.File
 
@@ -63,15 +71,34 @@ fun ContentView() {
 
     } else {
 
-        LazyColumn {
+        val lazyListState = rememberLazyListState()
 
-            items(files) { file ->
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
 
-                Text(
-                    text = file.path,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+            LazyColumn(
+                state = lazyListState
+            ) {
+
+                items(files) { file ->
+
+                    Text(
+                        text = file.path,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
+
+            VerticalScrollbar(
+                adapter = rememberScrollbarAdapter(lazyListState),
+                modifier = Modifier.fillMaxHeight().align(Alignment.CenterEnd),
+                style = defaultScrollbarStyle().copy(
+                    unhoverColor = lightGray.copy(alpha = 0.4f),
+                    hoverColor = lightGray
+                ),
+            )
         }
     }
 }
