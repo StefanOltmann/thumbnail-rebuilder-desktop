@@ -17,26 +17,70 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import ui.App
+import ui.AppTitleBar
+import ui.ContentView
+import ui.Footer
+import ui.theme.AppTypography
+import ui.theme.appColorScheme
+import ui.theme.defaultRoundedCornerShape
 import java.awt.Dimension
+
+const val WINDOW_WIDTH = 800
+const val WINDOW_HEIGHT = 600
 
 fun main() = application {
 
     Window(
         onCloseRequest = ::exitApplication,
         title = "Thumbnail Rebuilder",
+        undecorated = true,
+        transparent = true,
         state = rememberWindowState(
-            size = DpSize(800.dp, 600.dp)
+            size = DpSize(WINDOW_WIDTH.dp, WINDOW_HEIGHT.dp)
         )
     ) {
 
-        this.window.minimumSize = Dimension(800, 600)
+        this.window.minimumSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-        App()
+        MaterialTheme(
+            colorScheme = appColorScheme,
+            typography = AppTypography()
+        ) {
+
+            Column(
+                modifier = Modifier
+                    .clip(defaultRoundedCornerShape)
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+
+                AppTitleBar()
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .weight(1F)
+                        .fillMaxSize()
+                ) {
+
+                    ContentView()
+                }
+
+                Footer()
+            }
+        }
     }
 }
+

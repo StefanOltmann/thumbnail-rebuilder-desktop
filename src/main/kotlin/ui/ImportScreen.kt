@@ -64,12 +64,6 @@ fun ImportScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(
-            text = "Thumbnail Rebuilder",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.displayLarge
-        )
-
         var showTargetBorder by remember { mutableStateOf(false) }
 
         val dragAndDropTarget = remember {
