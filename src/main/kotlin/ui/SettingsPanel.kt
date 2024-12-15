@@ -19,27 +19,15 @@
 
 package ui
 
-import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.defaultScrollbarStyle
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -49,19 +37,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.icons.IconPlay
 import ui.theme.DefaultSpacer
 import ui.theme.FillSpacer
-import ui.theme.defaultPadding
-import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
-import ui.theme.halfPadding
-import ui.theme.halfSpacing
-import ui.theme.lightGray
-import ui.util.cleanPath
-import java.io.File
 
 @Composable
 fun SettingsPanel() {
@@ -70,64 +50,17 @@ fun SettingsPanel() {
         horizontalArrangement = Arrangement.spacedBy(defaultSpacing),
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .background(Color.Blue)
+            .background(Color.Black)
             .fillMaxWidth()
             .height(48.dp)
     ) {
 
         DefaultSpacer()
 
-        Text(
-            text = "Size:",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyLarge
-        )
+        SettingsSlider("Size")
 
-        SettingsButton(
-            text = "160",
-            onClick = {}
-        )
 
-        SettingsButton(
-            text = "256",
-            onClick = {}
-        )
-
-        SettingsButton(
-            text = "320",
-            onClick = {}
-        )
-
-        SettingsButton(
-            text = "480",
-            onClick = {}
-        )
-
-        Text(
-            text = "Quality:",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyLarge
-        )
-
-        SettingsButton(
-            text = "75",
-            onClick = {}
-        )
-
-        SettingsButton(
-            text = "80",
-            onClick = {}
-        )
-
-        SettingsButton(
-            text = "85",
-            onClick = {}
-        )
-
-        SettingsButton(
-            text = "90",
-            onClick = {}
-        )
+        SettingsSlider("Quality")
 
         FillSpacer()
 
@@ -143,29 +76,57 @@ fun SettingsPanel() {
 }
 
 @Composable
-private fun SettingsButton(
-    text: String,
-    onClick: () -> Unit
+private fun SettingsSlider(
+    label: String
 ) {
 
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .border(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.onBackground,
-                shape = defaultRoundedCornerShape
-            )
-            .size(32.dp)
-            .clickable(onClick = onClick)
-    ) {
+    var sliderValue by remember { mutableStateOf(0f) }
+
+    Column {
 
         Text(
-            text = text,
+            text = "$label: ${sliderValue.toInt()}",
             color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                fontWeight = FontWeight.Bold
-            )
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.height(24.dp)
+        )
+
+        Slider(
+            value = sliderValue,
+            onValueChange = { sliderValue = it },
+            valueRange = 0f..3f,
+            steps = 2,
+            modifier = Modifier
+                .height(24.dp)
+                .width(200.dp)
         )
     }
 }
+
+//@Composable
+//private fun SettingsButton(
+//    text: String,
+//    onClick: () -> Unit
+//) {
+//
+//    Box(
+//        contentAlignment = Alignment.Center,
+//        modifier = Modifier
+//            .border(
+//                width = 2.dp,
+//                color = MaterialTheme.colorScheme.onBackground,
+//                shape = defaultRoundedCornerShape
+//            )
+//            .size(32.dp)
+//            .clickable(onClick = onClick)
+//    ) {
+//
+//        Text(
+//            text = text,
+//            color = MaterialTheme.colorScheme.onBackground,
+//            style = MaterialTheme.typography.bodyMedium.copy(
+//                fontWeight = FontWeight.Bold
+//            )
+//        )
+//    }
+//}
