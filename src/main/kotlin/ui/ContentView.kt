@@ -20,10 +20,14 @@
 package ui
 
 import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.background
 import androidx.compose.foundation.defaultScrollbarStyle
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -37,6 +41,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import ui.theme.defaultPadding
+import ui.theme.defaultRoundedCornerShape
+import ui.theme.halfPadding
+import ui.theme.halfSpacing
 import ui.theme.lightGray
 import ui.util.cleanPath
 import java.io.File
@@ -79,15 +89,30 @@ fun ContentView() {
         ) {
 
             LazyColumn(
-                state = lazyListState
+                state = lazyListState,
+                modifier = Modifier.halfPadding()
             ) {
 
                 items(files) { file ->
 
-                    Text(
-                        text = file.path,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    Box(
+                        modifier = Modifier
+                            .halfPadding()
+                            .background(
+                                MaterialTheme.colorScheme.surface,
+                                defaultRoundedCornerShape
+                            )
+                            .fillMaxWidth()
+                            .height(48.dp)
+                    ) {
+
+                        Text(
+                            text = file.path,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+
+
                 }
             }
 
@@ -97,7 +122,7 @@ fun ContentView() {
                 style = defaultScrollbarStyle().copy(
                     unhoverColor = lightGray.copy(alpha = 0.4f),
                     hoverColor = lightGray
-                ),
+                )
             )
         }
     }

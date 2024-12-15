@@ -101,7 +101,7 @@ fun ImportScreen(
                 .then(
                     if (showTargetBorder)
                         Modifier.background(
-                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f),
+                            color = MaterialTheme.colorScheme.surface,
                             shape = defaultRoundedCornerShape
                         )
                     else
