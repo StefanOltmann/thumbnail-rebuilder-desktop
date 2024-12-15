@@ -22,8 +22,14 @@ package ui.theme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.ui.graphics.Color
 
+val lightGray = Color(0xFFF2F2F2)
+
 val backgroundColor = Color(0xFF222222)
+val hoverColor = Color.Yellow
 
 val appColorScheme = darkColorScheme(
-    background = backgroundColor
+    background = backgroundColor,
+    onBackground = lightGray,
+    primary = lightGray,
+    secondary = hoverColor
 )
