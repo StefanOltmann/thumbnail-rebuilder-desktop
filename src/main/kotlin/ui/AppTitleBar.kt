@@ -19,6 +19,7 @@
 
 package ui
 
+import APP_TITLE
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
@@ -76,7 +77,7 @@ fun WindowScope.AppTitleBar(
             )
 
             Text(
-                text = "Thumbnail Rebuilder",
+                text = APP_TITLE,
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.offset(y = -1.dp)

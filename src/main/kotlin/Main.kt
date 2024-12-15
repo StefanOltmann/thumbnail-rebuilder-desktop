@@ -38,6 +38,8 @@ import ui.theme.appColorScheme
 import ui.theme.defaultRoundedCornerShape
 import java.awt.Dimension
 
+const val APP_TITLE = "Thumbnail Rebuilder"
+
 const val WINDOW_WIDTH = 800
 const val WINDOW_HEIGHT = 600
 
@@ -49,7 +51,7 @@ fun main() = application {
 
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Thumbnail Rebuilder",
+        title = APP_TITLE,
         undecorated = true,
         transparent = true,
         state = windowState
