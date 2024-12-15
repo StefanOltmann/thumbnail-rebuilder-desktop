@@ -28,6 +28,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.ashampoo.kim.common.exists
+import kotlinx.io.files.Path
+import ui.util.cleanPath
 import java.io.File
 
 @Composable
@@ -43,7 +46,9 @@ fun ContentView() {
 
             println("Import: $path")
 
-            val file = File(path)
+            val file = File(cleanPath(path))
+
+            println("--> $file")
 
             if (file.isFile)
                 tempFiles.add(file)
