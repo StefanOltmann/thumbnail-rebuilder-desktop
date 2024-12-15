@@ -11,42 +11,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val AppIcon: ImageVector
+val IconPlay: ImageVector
     get() {
-        if (_AppIcon != null) {
-            return _AppIcon!!
+        if (_IconPlay != null) {
+            return _IconPlay!!
         }
-        _AppIcon = ImageVector.Builder(
-            name = "AppIcon",
-            defaultWidth = 24.dp,
-            defaultHeight = 24.dp,
+        _IconPlay = ImageVector.Builder(
+            name = "IconPlay",
+            defaultWidth = 48.dp,
+            defaultHeight = 48.dp,
             viewportWidth = 960f,
             viewportHeight = 960f
         ).apply {
             path(fill = SolidColor(Color(0xFF222222))) {
-                moveToRelative(620f, 676f)
-                lineToRelative(56f, -56f)
-                quadToRelative(6f, -6f, 6f, -14f)
-                reflectiveQuadToRelative(-6f, -14f)
-                lineTo(540f, 455f)
-                quadToRelative(4f, -11f, 6f, -22f)
-                reflectiveQuadToRelative(2f, -25f)
-                quadToRelative(0f, -57f, -40.5f, -97.5f)
-                reflectiveQuadTo(410f, 270f)
-                quadToRelative(-17f, 0f, -34f, 4.5f)
-                reflectiveQuadTo(343f, 287f)
-                lineToRelative(94f, 94f)
-                lineToRelative(-56f, 56f)
-                lineToRelative(-94f, -94f)
-                quadToRelative(-8f, 16f, -12.5f, 33f)
-                reflectiveQuadToRelative(-4.5f, 34f)
-                quadToRelative(0f, 57f, 40.5f, 97.5f)
-                reflectiveQuadTo(408f, 548f)
-                quadToRelative(13f, 0f, 24.5f, -2f)
-                reflectiveQuadToRelative(22.5f, -6f)
-                lineToRelative(137f, 136f)
-                quadToRelative(6f, 6f, 14f, 6f)
-                reflectiveQuadToRelative(14f, -6f)
+                moveToRelative(380f, 660f)
+                lineToRelative(280f, -180f)
+                lineToRelative(-280f, -180f)
+                verticalLineToRelative(360f)
                 close()
                 moveTo(480f, 880f)
                 quadToRelative(-83f, 0f, -156f, -31.5f)
@@ -81,8 +62,8 @@ val AppIcon: ImageVector
             }
         }.build()
 
-        return _AppIcon!!
+        return _IconPlay!!
     }
 
 @Suppress("ObjectPropertyName")
-private var _AppIcon: ImageVector? = null
+private var _IconPlay: ImageVector? = null

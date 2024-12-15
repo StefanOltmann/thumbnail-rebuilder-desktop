@@ -53,61 +53,24 @@ import ui.theme.FillSpacer
 import ui.theme.halfSpacing
 
 @Composable
-fun WindowScope.AppTitleBar(
-    windowState: WindowState,
-    exitApplication: () -> Unit
+fun ClickableIcon(
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
-    WindowDraggableArea {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(halfSpacing),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .height(32.dp)
-                .background(Color.Black)
-                .padding(
-                    horizontal = 2.dp
-                )
-        ) {
-
-            Icon(
-                imageVector = AppIcon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground
-            )
-
-            Text(
-                text = APP_TITLE,
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.offset(y = -1.dp)
-            )
-
-            FillSpacer()
-
-            ClickableIcon(
-                imageVector = IconMinimize,
-                onClick = {
-                    windowState.isMinimized = true
-                }
-            )
-
-            ClickableIcon(
-                imageVector = IconMaximize,
-                onClick = {
-
-                    if (windowState.placement != WindowPlacement.Maximized)
-                        windowState.placement = WindowPlacement.Maximized
-                    else
-                        windowState.placement = WindowPlacement.Floating
-                }
-            )
-
-            ClickableIcon(
-                imageVector = IconClose,
-                onClick = exitApplication
-            )
-        }
-    }
+    Icon(
+        imageVector = imageVector,
+        contentDescription = null,
+        tint = if (isHovered)
+            MaterialTheme.colorScheme.secondary
+        else
+            MaterialTheme.colorScheme.onBackground,
+        modifier = modifier
+            .hoverable(interactionSource)
+            .clickable(onClick = onClick)
+    )
 }

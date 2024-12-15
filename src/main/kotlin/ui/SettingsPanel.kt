@@ -49,7 +49,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ui.icons.IconPlay
+import ui.theme.DefaultSpacer
 import ui.theme.FillSpacer
 import ui.theme.defaultPadding
 import ui.theme.defaultRoundedCornerShape
@@ -70,10 +73,9 @@ fun SettingsPanel() {
             .background(Color.Blue)
             .fillMaxWidth()
             .height(48.dp)
-            .padding(
-                horizontal = defaultSpacing
-            )
     ) {
+
+        DefaultSpacer()
 
         Text(
             text = "Size:",
@@ -129,23 +131,14 @@ fun SettingsPanel() {
 
         FillSpacer()
 
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .border(
-                    width = 2.dp,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    shape = defaultRoundedCornerShape
-                )
-                .size(200.dp, 32.dp)
-        ) {
+        ClickableIcon(
+            imageVector = IconPlay,
+            onClick = {
+                println("Start!")
+            }
+        )
 
-            Text(
-                text = "Start",
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+        DefaultSpacer()
     }
 }
 
@@ -170,7 +163,9 @@ private fun SettingsButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontWeight = FontWeight.Bold
+            )
         )
     }
 }

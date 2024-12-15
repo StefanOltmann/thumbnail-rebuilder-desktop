@@ -1,3 +1,8 @@
+/*
+ * Material Design Icon under Apache 2 License
+ * Taken from https://fonts.google.com/icons
+ */
+
 package ui.icons
 
 import androidx.compose.ui.graphics.Color

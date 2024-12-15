@@ -1,3 +1,8 @@
+/*
+ * Material Design Icon under Apache 2 License
+ * Taken from https://fonts.google.com/icons
+ */
+
 package ui.icons
 
 import androidx.compose.ui.graphics.Color
@@ -18,7 +23,7 @@ val IconDownload: ImageVector
             viewportWidth = 960f,
             viewportHeight = 960f
         ).apply {
-            path(fill = SolidColor(Color(0xFF5F6368))) {
+            path(fill = SolidColor(Color(0xFF222222))) {
                 moveTo(480f, 640f)
                 lineTo(280f, 440f)
                 lineToRelative(56f, -58f)
