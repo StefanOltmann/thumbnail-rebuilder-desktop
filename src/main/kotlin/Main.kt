@@ -43,14 +43,16 @@ const val WINDOW_HEIGHT = 600
 
 fun main() = application {
 
+    val windowState = rememberWindowState(
+        size = DpSize(WINDOW_WIDTH.dp, WINDOW_HEIGHT.dp)
+    )
+
     Window(
         onCloseRequest = ::exitApplication,
         title = "Thumbnail Rebuilder",
         undecorated = true,
         transparent = true,
-        state = rememberWindowState(
-            size = DpSize(WINDOW_WIDTH.dp, WINDOW_HEIGHT.dp)
-        )
+        state = windowState
     ) {
 
         this.window.minimumSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -66,7 +68,10 @@ fun main() = application {
                     .background(MaterialTheme.colorScheme.background)
             ) {
 
-                AppTitleBar()
+                AppTitleBar(
+                    windowState,
+                    ::exitApplication
+                )
 
                 Box(
                     contentAlignment = Alignment.Center,

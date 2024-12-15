@@ -1,6 +1,7 @@
 package ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -14,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowScope
+import androidx.compose.ui.window.WindowState
 import io.github.composegears.valkyrie.AppIcon
 import ui.icons.IconClose
 import ui.icons.IconMaximize
@@ -24,7 +27,10 @@ import ui.theme.HalfSpacer
 import ui.theme.halfSpacing
 
 @Composable
-fun WindowScope.AppTitleBar() {
+fun WindowScope.AppTitleBar(
+    windowState: WindowState,
+    exitApplication: () -> Unit
+) {
 
     WindowDraggableArea {
 
@@ -56,19 +62,30 @@ fun WindowScope.AppTitleBar() {
             Icon(
                 imageVector = IconMinimize,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.clickable {
+                    windowState.isMinimized = true
+                }
             )
 
             Icon(
                 imageVector = IconMaximize,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.clickable {
+
+                    if (windowState.placement != WindowPlacement.Maximized)
+                        windowState.placement = WindowPlacement.Maximized
+                        else
+                    windowState.placement = WindowPlacement.Floating
+                }
             )
 
             Icon(
                 imageVector = IconClose,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.clickable(onClick = exitApplication)
             )
 
             HalfSpacer()
