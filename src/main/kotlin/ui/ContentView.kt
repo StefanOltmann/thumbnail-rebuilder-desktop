@@ -19,37 +19,55 @@
 
 package ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.font.FontWeight
+import java.io.File
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun ContentView() {
 
-    val filesImported = remember { mutableStateOf(false) }
-
-    val files = remember { mutableListOf<String>() }
+    var files by remember { mutableStateOf( emptyList<File>() ) }
 
     val onFilesImport: (List<String>) -> Unit = {
 
-        println(it)
+        val tempFiles = mutableListOf<File>()
 
-        files.clear()
-        files.addAll(it)
+        for (path in it) {
 
-        filesImported.value = true
+            println("Import: $path")
+
+            val file = File(path)
+
+            if (file.isFile)
+                tempFiles.add(file)
+        }
+
+        files = tempFiles.toList()
     }
 
-    if (!filesImported.value) {
+    if (files.isEmpty()) {
 
         ImportScreen(onFilesImport)
 
     } else {
 
-        Text(files.toString())
+        LazyColumn {
+
+            items(files) { file ->
+
+                Text(
+                    text = file.path,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
+        }
     }
 }
