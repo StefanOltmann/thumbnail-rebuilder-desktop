@@ -27,13 +27,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val FooterGraphic: ImageVector
+val MadeByGraphic: ImageVector
     get() {
-        if (_FooterGraphic != null) {
-            return _FooterGraphic!!
+        if (_MadeByGraphic != null) {
+            return _MadeByGraphic!!
         }
-        _FooterGraphic = ImageVector.Builder(
-            name = "FooterGraphic",
+        _MadeByGraphic = ImageVector.Builder(
+            name = "MadeByGraphic",
             defaultWidth = 1110.dp,
             defaultHeight = 96.dp,
             viewportWidth = 1110f,
@@ -876,8 +876,8 @@ val FooterGraphic: ImageVector
             }
         }.build()
 
-        return _FooterGraphic!!
+        return _MadeByGraphic!!
     }
 
 @Suppress("ObjectPropertyName")
-private var _FooterGraphic: ImageVector? = null
+private var _MadeByGraphic: ImageVector? = null

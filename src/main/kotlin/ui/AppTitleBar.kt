@@ -43,12 +43,10 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowScope
 import androidx.compose.ui.window.WindowState
 import ui.icons.AppIcon
-import ui.icons.FooterGraphic
+import ui.icons.MadeByGraphic
 import ui.icons.IconClose
 import ui.icons.IconMaximize
 import ui.icons.IconMinimize
-import ui.theme.DefaultSpacer
-import ui.theme.DoubleSpacer
 import ui.theme.FillSpacer
 import ui.theme.halfSpacing
 
@@ -89,7 +87,7 @@ fun WindowScope.AppTitleBar(
             FillSpacer()
 
             Image(
-                imageVector = FooterGraphic,
+                imageVector = MadeByGraphic,
                 contentDescription = null,
                 modifier = Modifier
                     .height(20.dp)
