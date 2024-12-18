@@ -24,11 +24,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -36,19 +35,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import model.Quality
 import model.Size
+import ui.icons.IconLeft
+import ui.icons.IconRight
 import ui.theme.DefaultSpacer
-import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
 import ui.theme.doublePadding
 import ui.theme.halfPadding
 
 private val settingsBoxWidth = 272.dp
-
-private val sliderWidth = settingsBoxWidth - 32.dp
 
 @Composable
 fun SettingsPanel(
@@ -78,6 +77,7 @@ private fun SizeSettingSlider(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .background(Color.Black, defaultRoundedCornerShape)
+            .width(settingsBoxWidth)
     ) {
 
         Box(
@@ -90,8 +90,8 @@ private fun SizeSettingSlider(
                         topEnd = 8.dp
                     )
                 )
-                .width(settingsBoxWidth)
                 .halfPadding()
+                .fillMaxWidth()
         ) {
 
             Text(
@@ -103,27 +103,36 @@ private fun SizeSettingSlider(
             )
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.doublePadding()
         ) {
+
+            val lower = sizeSettingState.value.lower()
+            val higher = sizeSettingState.value.higher()
+
+            ClickableIcon(
+                imageVector = IconLeft,
+                enabled = lower != null,
+                onClick = {
+                    lower?.let { sizeSettingState.value = it }
+                }
+            )
 
             Text(
                 text = sizeSettingState.value.displayString,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.displayMedium
+                style = MaterialTheme.typography.displayMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1F)
             )
 
-            DoubleSpacer()
-
-            Slider(
-                value = sizeSettingState.value.ordinal.toFloat(),
-                onValueChange = { sizeSettingState.value = Size.entries[it.toInt()] },
-                valueRange = 0f..Size.entries.size.minus(1).toFloat(),
-                steps = Size.entries.size - 2,
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(sliderWidth)
+            ClickableIcon(
+                imageVector = IconRight,
+                enabled = higher != null,
+                onClick = {
+                    higher?.let { sizeSettingState.value = it }
+                }
             )
         }
     }
@@ -138,6 +147,7 @@ private fun QualitySettingSlider(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .background(Color.Black, defaultRoundedCornerShape)
+            .width(settingsBoxWidth)
     ) {
 
         Box(
@@ -150,8 +160,8 @@ private fun QualitySettingSlider(
                         topEnd = 8.dp
                     )
                 )
-                .width(settingsBoxWidth)
                 .halfPadding()
+                .fillMaxWidth()
         ) {
 
             Text(
@@ -163,27 +173,36 @@ private fun QualitySettingSlider(
             )
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.doublePadding()
         ) {
+
+            val lower = qualitySettingState.value.lower()
+            val higher = qualitySettingState.value.higher()
+
+            ClickableIcon(
+                imageVector = IconLeft,
+                enabled = lower != null,
+                onClick = {
+                    lower?.let { qualitySettingState.value = it }
+                }
+            )
 
             Text(
                 text = qualitySettingState.value.displayString,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.displayMedium
+                style = MaterialTheme.typography.displayMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1F)
             )
 
-            DoubleSpacer()
-
-            Slider(
-                value = qualitySettingState.value.ordinal.toFloat(),
-                onValueChange = { qualitySettingState.value = Quality.entries[it.toInt()] },
-                valueRange = 0f..Quality.entries.size.minus(1).toFloat(),
-                steps = Quality.entries.size - 2,
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(sliderWidth)
+            ClickableIcon(
+                imageVector = IconRight,
+                enabled = higher != null,
+                onClick = {
+                    higher?.let { qualitySettingState.value = it }
+                }
             )
         }
     }

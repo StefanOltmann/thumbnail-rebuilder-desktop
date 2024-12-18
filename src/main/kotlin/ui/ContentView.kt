@@ -58,7 +58,7 @@ fun ContentView() {
     var files by remember { mutableStateOf(emptyList<File>()) }
 
     val sizeSettingState = remember { mutableStateOf(Size.HIGH) }
-    val qualitySettingState = remember { mutableStateOf(Quality.HIGH) }
+    val qualitySettingState = remember { mutableStateOf(Quality.GOOD) }
 
     val onFilesImport: (List<String>) -> Unit = {
 

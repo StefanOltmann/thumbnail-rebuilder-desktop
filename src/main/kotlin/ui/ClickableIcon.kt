@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 fun ClickableIcon(
     imageVector: ImageVector,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
 
@@ -44,12 +45,17 @@ fun ClickableIcon(
     Icon(
         imageVector = imageVector,
         contentDescription = null,
-        tint = if (isHovered)
+        tint = if (enabled && isHovered)
             MaterialTheme.colorScheme.secondary
+        else if (enabled)
+            MaterialTheme.colorScheme.onBackground
         else
-            MaterialTheme.colorScheme.onBackground,
-        modifier = modifier
+            MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+        modifier = if (enabled)
+            modifier
             .hoverable(interactionSource)
             .clickable(onClick = onClick)
+        else
+            modifier
     )
 }

@@ -92,7 +92,7 @@ fun DropTarget(
         modifier = Modifier
             .size(
                 width = (WINDOW_WIDTH - 32).dp,
-                height = 200.dp
+                height = 240.dp
             )
             .then(
                 if (showTargetBorder)
