@@ -31,15 +31,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import model.Quality
+import model.Size
 import ui.theme.DefaultSpacer
 import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
@@ -47,28 +46,33 @@ import ui.theme.defaultSpacing
 import ui.theme.doublePadding
 import ui.theme.halfPadding
 
+private val settingsBoxWidth = 272.dp
+
+private val sliderWidth = settingsBoxWidth - 32.dp
+
 @Composable
-fun SettingsPanel() {
+fun SettingsPanel(
+    sizeSettingState: MutableState<Size>,
+    qualitySettingState: MutableState<Quality>
+) {
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(defaultSpacing),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        SettingsSlider("SIZE")
+        SizeSettingSlider(sizeSettingState)
 
         DefaultSpacer()
 
-        SettingsSlider("QUALITY")
+        QualitySettingSlider(qualitySettingState)
     }
 }
 
 @Composable
-private fun SettingsSlider(
-    label: String
+private fun SizeSettingSlider(
+    sizeSettingState: MutableState<Size>
 ) {
-
-    var sliderValue by remember { mutableStateOf(0f) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -86,12 +90,12 @@ private fun SettingsSlider(
                         topEnd = 8.dp
                     )
                 )
-                .width(196.dp)
+                .width(settingsBoxWidth)
                 .halfPadding()
         ) {
 
             Text(
-                text = label,
+                text = "SIZE",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold
@@ -100,55 +104,87 @@ private fun SettingsSlider(
         }
 
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.doublePadding()
         ) {
 
-        Text(
-            text = "${sliderValue.toInt()}",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.displayMedium
-        )
+            Text(
+                text = sizeSettingState.value.displayString,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.displayMedium
+            )
 
             DoubleSpacer()
 
-        Slider(
-            value = sliderValue,
-            onValueChange = { sliderValue = it },
-            valueRange = 0f..3f,
-            steps = 2,
-            modifier = Modifier
-                .height(24.dp)
-                .width(160.dp)
-        )
-
+            Slider(
+                value = sizeSettingState.value.ordinal.toFloat(),
+                onValueChange = { sizeSettingState.value = Size.entries[it.toInt()] },
+                valueRange = 0f..Size.entries.size.minus(1).toFloat(),
+                steps = Size.entries.size - 2,
+                modifier = Modifier
+                    .height(24.dp)
+                    .width(sliderWidth)
+            )
         }
     }
 }
 
-//@Composable
-//private fun SettingsButton(
-//    text: String,
-//    onClick: () -> Unit
-//) {
-//
-//    Box(
-//        contentAlignment = Alignment.Center,
-//        modifier = Modifier
-//            .border(
-//                width = 2.dp,
-//                color = MaterialTheme.colorScheme.onBackground,
-//                shape = defaultRoundedCornerShape
-//            )
-//            .size(32.dp)
-//            .clickable(onClick = onClick)
-//    ) {
-//
-//        Text(
-//            text = text,
-//            color = MaterialTheme.colorScheme.onBackground,
-//            style = MaterialTheme.typography.bodyMedium.copy(
-//                fontWeight = FontWeight.Bold
-//            )
-//        )
-//    }
-//}
+@Composable
+private fun QualitySettingSlider(
+    qualitySettingState: MutableState<Quality>
+) {
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .background(Color.Black, defaultRoundedCornerShape)
+    ) {
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .background(
+                    Color.DarkGray,
+                    RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp
+                    )
+                )
+                .width(settingsBoxWidth)
+                .halfPadding()
+        ) {
+
+            Text(
+                text = "QUALITY",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.doublePadding()
+        ) {
+
+            Text(
+                text = qualitySettingState.value.displayString,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.displayMedium
+            )
+
+            DoubleSpacer()
+
+            Slider(
+                value = qualitySettingState.value.ordinal.toFloat(),
+                onValueChange = { qualitySettingState.value = Quality.entries[it.toInt()] },
+                valueRange = 0f..Quality.entries.size.minus(1).toFloat(),
+                steps = Quality.entries.size - 2,
+                modifier = Modifier
+                    .height(24.dp)
+                    .width(sliderWidth)
+            )
+        }
+    }
+}

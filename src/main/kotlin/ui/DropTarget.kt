@@ -19,6 +19,7 @@
 
 package ui
 
+import WINDOW_WIDTH
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
@@ -90,7 +91,7 @@ fun DropTarget(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(
-                width = 400.dp,
+                width = (WINDOW_WIDTH - 32).dp,
                 height = 200.dp
             )
             .then(

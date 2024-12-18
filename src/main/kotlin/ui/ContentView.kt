@@ -42,6 +42,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import model.Quality
+import model.Size
 import ui.theme.DefaultSpacer
 import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
@@ -54,6 +56,9 @@ import java.io.File
 fun ContentView() {
 
     var files by remember { mutableStateOf(emptyList<File>()) }
+
+    val sizeSettingState = remember { mutableStateOf(Size.HIGH) }
+    val qualitySettingState = remember { mutableStateOf(Quality.HIGH) }
 
     val onFilesImport: (List<String>) -> Unit = {
 
@@ -91,7 +96,10 @@ fun ContentView() {
 
                 DefaultSpacer()
 
-                SettingsPanel()
+                SettingsPanel(
+                    sizeSettingState = sizeSettingState,
+                    qualitySettingState = qualitySettingState
+                )
 
             } else {
 
