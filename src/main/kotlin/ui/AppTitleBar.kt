@@ -22,7 +22,6 @@ package ui
 import APP_TITLE
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -91,15 +90,13 @@ fun WindowScope.AppTitleBar(
 
             FillSpacer()
 
+            /* Must not be clickable or Windows can't be moved. */
             Image(
                 imageVector = MadeByGraphic,
                 contentDescription = null,
                 modifier = Modifier
                     .height(20.dp)
                     .offset(y = 1.dp)
-                    .clickable {
-                        uriHandler.openUri("https://github.com/StefanOltmann/thumbnail-fixer")
-                    }
             )
 
             Spacer(

@@ -42,6 +42,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ui.theme.DefaultSpacer
+import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.halfPadding
 import ui.theme.lightGray
@@ -72,26 +74,30 @@ fun ContentView() {
         files = tempFiles.toList()
     }
 
-    Column {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
 
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1F)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             if (files.isEmpty()) {
 
-                ImportScreen(onFilesImport)
+                DropTarget(onFilesImport)
+
+                DoubleSpacer()
+
+                DefaultSpacer()
+
+                SettingsPanel()
 
             } else {
 
                 FileList(files)
             }
         }
-
-        SettingsPanel()
     }
 }
 

@@ -36,8 +36,8 @@ import java.awt.Dimension
 
 const val APP_TITLE = "Thumbnail Fixer"
 
-const val WINDOW_WIDTH = 800
-const val WINDOW_HEIGHT = 600
+const val WINDOW_WIDTH = 600
+const val WINDOW_HEIGHT = 450
 
 fun main() = application {
 
@@ -50,6 +50,7 @@ fun main() = application {
         title = APP_TITLE,
         undecorated = true,
         transparent = true,
+        // resizable = false,
         state = windowState
     ) {
 

@@ -41,6 +41,8 @@ fun Modifier.halfPadding() = this.padding(halfSpacing)
 
 fun Modifier.defaultPadding() = this.padding(defaultSpacing)
 
+fun Modifier.doublePadding() = this.padding(doubleSpacing)
+
 @Composable
 fun HalfSpacer() = Spacer(Modifier.size(halfSpacing))
 

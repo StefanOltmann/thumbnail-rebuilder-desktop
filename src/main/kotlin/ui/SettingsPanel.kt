@@ -21,11 +21,12 @@ package ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -37,41 +38,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ui.icons.IconPlay
 import ui.theme.DefaultSpacer
-import ui.theme.FillSpacer
+import ui.theme.DoubleSpacer
+import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
+import ui.theme.doublePadding
+import ui.theme.halfPadding
 
 @Composable
 fun SettingsPanel() {
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(defaultSpacing),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .background(Color.Black)
-            .fillMaxWidth()
-            .height(48.dp)
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
-        DefaultSpacer()
-
-        SettingsSlider("Size")
-
-
-        SettingsSlider("Quality")
-
-        FillSpacer()
-
-        ClickableIcon(
-            imageVector = IconPlay,
-            onClick = {
-                println("Start!")
-            }
-        )
+        SettingsSlider("SIZE")
 
         DefaultSpacer()
+
+        SettingsSlider("QUALITY")
     }
 }
 
@@ -82,14 +70,46 @@ private fun SettingsSlider(
 
     var sliderValue by remember { mutableStateOf(0f) }
 
-    Column {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .background(Color.Black, defaultRoundedCornerShape)
+    ) {
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .background(
+                    Color.DarkGray,
+                    RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp
+                    )
+                )
+                .width(196.dp)
+                .halfPadding()
+        ) {
+
+            Text(
+                text = label,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+
+        Column(
+            modifier = Modifier.doublePadding()
+        ) {
 
         Text(
-            text = "$label: ${sliderValue.toInt()}",
+            text = "${sliderValue.toInt()}",
             color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.height(24.dp)
+            style = MaterialTheme.typography.displayMedium
         )
+
+            DoubleSpacer()
 
         Slider(
             value = sliderValue,
@@ -98,8 +118,10 @@ private fun SettingsSlider(
             steps = 2,
             modifier = Modifier
                 .height(24.dp)
-                .width(200.dp)
+                .width(160.dp)
         )
+
+        }
     }
 }
 
