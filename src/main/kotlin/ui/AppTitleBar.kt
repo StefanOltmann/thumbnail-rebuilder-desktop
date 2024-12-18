@@ -22,6 +22,7 @@ package ui
 import APP_TITLE
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
@@ -44,6 +46,7 @@ import androidx.compose.ui.window.WindowScope
 import androidx.compose.ui.window.WindowState
 import ui.icons.AppIcon
 import ui.icons.IconClose
+import ui.icons.IconDonate
 import ui.icons.IconMaximize
 import ui.icons.IconMinimize
 import ui.icons.MadeByGraphic
@@ -55,6 +58,8 @@ fun WindowScope.AppTitleBar(
     windowState: WindowState,
     exitApplication: () -> Unit
 ) {
+
+    val uriHandler = LocalUriHandler.current
 
     WindowDraggableArea {
 
@@ -92,10 +97,20 @@ fun WindowScope.AppTitleBar(
                 modifier = Modifier
                     .height(20.dp)
                     .offset(y = 1.dp)
+                    .clickable {
+                        uriHandler.openUri("https://github.com/StefanOltmann/thumbnail-fixer")
+                    }
             )
 
             Spacer(
                 modifier = Modifier.width(32.dp)
+            )
+
+            ClickableIcon(
+                imageVector = IconDonate,
+                onClick = {
+                    uriHandler.openUri("https://github.com/sponsors/StefanOltmann")
+                }
             )
 
             ClickableIcon(
