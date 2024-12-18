@@ -41,7 +41,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "Thumbnail Rebuilder"
+            packageName = "🔧 Thumbnail Fixer 🔧"
             packageVersion = version.toString()
         }
     }

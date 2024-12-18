@@ -1,5 +1,5 @@
 /*
- * Thumbnail Rebuilder
+ * 🔧 Thumbnail Fixer 🔧
  * Copyright (C) 2024 Stefan Oltmann
  * https://stefan-oltmann.de/thumbnail-rebuilder-desktop
  *

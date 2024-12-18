@@ -13,4 +13,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "thumbnail-rebuilder-desktop"
+rootProject.name = "thumbnail-fixer"

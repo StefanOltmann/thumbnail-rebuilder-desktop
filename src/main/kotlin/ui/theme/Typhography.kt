@@ -1,5 +1,5 @@
 /*
- * Thumbnail Rebuilder
+ * 🔧 Thumbnail Fixer 🔧
  * Copyright (C) 2024 Stefan Oltmann
  * https://stefan-oltmann.de/thumbnail-rebuilder-desktop
  *
@@ -24,11 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import de.stefan_oltmann.thumbnail_rebuilder_desktop.generated.resources.Res
-import de.stefan_oltmann.thumbnail_rebuilder_desktop.generated.resources.economica_bold
-import de.stefan_oltmann.thumbnail_rebuilder_desktop.generated.resources.economica_bold_italic
-import de.stefan_oltmann.thumbnail_rebuilder_desktop.generated.resources.economica_italic
-import de.stefan_oltmann.thumbnail_rebuilder_desktop.generated.resources.economica_regular
+import de.stefan_oltmann.thumbnail_fixer.generated.resources.Res
+import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_bold
+import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_bold_italic
+import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_italic
+import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_regular
 import org.jetbrains.compose.resources.Font
 
 @Composable

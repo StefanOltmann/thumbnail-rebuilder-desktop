@@ -1,5 +1,5 @@
 /*
- * Thumbnail Rebuilder
+ * 🔧 Thumbnail Fixer 🔧
  * Copyright (C) 2024 Stefan Oltmann
  * https://stefan-oltmann.de/thumbnail-rebuilder-desktop
  *
@@ -43,10 +43,10 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowScope
 import androidx.compose.ui.window.WindowState
 import ui.icons.AppIcon
-import ui.icons.MadeByGraphic
 import ui.icons.IconClose
 import ui.icons.IconMaximize
 import ui.icons.IconMinimize
+import ui.icons.MadeByGraphic
 import ui.theme.FillSpacer
 import ui.theme.halfSpacing
 

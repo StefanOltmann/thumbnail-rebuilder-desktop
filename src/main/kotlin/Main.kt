@@ -1,5 +1,5 @@
 /*
- * Thumbnail Rebuilder
+ * 🔧 Thumbnail Fixer 🔧
  * Copyright (C) 2024 Stefan Oltmann
  * https://stefan-oltmann.de/thumbnail-rebuilder-desktop
  *
@@ -18,11 +18,8 @@
  */
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.DpSize
@@ -37,7 +34,7 @@ import ui.theme.appColorScheme
 import ui.theme.defaultRoundedCornerShape
 import java.awt.Dimension
 
-const val APP_TITLE = "Thumbnail Rebuilder"
+const val APP_TITLE = "Thumbnail Fixer"
 
 const val WINDOW_WIDTH = 800
 const val WINDOW_HEIGHT = 600

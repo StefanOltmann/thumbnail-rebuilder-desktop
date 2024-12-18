@@ -1,4 +1,4 @@
-# Thumbnail Rebuilder
+# 🔧 Thumbnail Fixer 🔧
 
 [![Kotlin](https://img.shields.io/badge/kotlin-2.0.21-blue.svg?logo=kotlin)](httpw://kotlinlang.org)
 
@@ -14,6 +14,6 @@ please feel free to submit a pull request.
 
 ## License & Copyrights
 
-Thumbnail Rebuilder is licensed under the GNU Affero General Public License (AGPL),
+🔧 Thumbnail Fixer 🔧 is licensed under the GNU Affero General Public License (AGPL),
 ensuring the community's freedom to use, modify, and distribute the software.
 
