@@ -37,6 +37,7 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -51,6 +52,7 @@ import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.halfPadding
 import ui.theme.lightGray
+import util.ProcessResult
 import util.cleanPath
 import util.findAllFilesRecursive
 import util.rebuildThumbnail
@@ -69,6 +71,9 @@ fun ContentView(
     val compressionQualitySettingState = remember { mutableStateOf(CompressionQuality.GOOD) }
     val skipExistingStettingState = remember { mutableStateOf(true) }
     val preserveModificationDateStettingState = remember { mutableStateOf(false) }
+
+    val counter = remember { mutableStateOf(0) }
+    val resultsMap = remember { mutableMapOf<String, ProcessResult>() }
 
     val scope = rememberCoroutineScope()
 
@@ -97,6 +102,10 @@ fun ContentView(
                         preserveModificationDate = preserveModificationDate
                     )
 
+                    resultsMap[file.absolutePath] = result
+
+                    counter.value = counter.value + 1
+
                     println(file.absolutePath + " -> " + result)
                 }
 
@@ -119,11 +128,33 @@ fun ContentView(
 
             if (vipsLoaded) {
 
-                if (processingFilesState.value) {
+                if (processingFilesState.value || resultsMap.isNotEmpty()) {
+
+                    val successCount = derivedStateOf { resultsMap.count { it.value == ProcessResult.SUCCESS } }
+                    val failedCount = derivedStateOf { resultsMap.count { it.value == ProcessResult.FAILED } }
 
                     // TODO Animation
                     Text(
                         text = "Processing files...",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                    Text(
+                        text = "Count: ${counter.value}",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                    Text(
+                        text = "${successCount.value} successful",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+
+                    Text(
+                        text = "${failedCount.value} failed",
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleLarge
                     )
