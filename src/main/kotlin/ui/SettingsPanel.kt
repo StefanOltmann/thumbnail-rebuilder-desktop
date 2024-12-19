@@ -38,8 +38,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import model.Quality
-import model.Size
+import model.CompressionQuality
+import model.ThumbnailResolution
 import ui.icons.IconLeft
 import ui.icons.IconRight
 import ui.theme.DefaultSpacer
@@ -52,8 +52,8 @@ private val settingsBoxWidth = 208.dp
 
 @Composable
 fun SettingsPanel(
-    sizeSettingState: MutableState<Size>,
-    qualitySettingState: MutableState<Quality>
+    thumbnailResolutionSettingState: MutableState<ThumbnailResolution>,
+    compressionQualitySettingState: MutableState<CompressionQuality>
 ) {
 
     Row(
@@ -61,17 +61,17 @@ fun SettingsPanel(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        SizeSettingSlider(sizeSettingState)
+        SizeSettingSlider(thumbnailResolutionSettingState)
 
         DefaultSpacer()
 
-        QualitySettingSlider(qualitySettingState)
+        QualitySettingSlider(compressionQualitySettingState)
     }
 }
 
 @Composable
 private fun SizeSettingSlider(
-    sizeSettingState: MutableState<Size>
+    thumbnailResolutionSettingState: MutableState<ThumbnailResolution>
 ) {
 
     Column(
@@ -96,7 +96,7 @@ private fun SizeSettingSlider(
         ) {
 
             Text(
-                text = "SIZE",
+                text = "THUMBNAIL RESOLUTION",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold
@@ -108,20 +108,20 @@ private fun SizeSettingSlider(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            val lower = sizeSettingState.value.lower()
-            val higher = sizeSettingState.value.higher()
+            val lower = thumbnailResolutionSettingState.value.lower()
+            val higher = thumbnailResolutionSettingState.value.higher()
 
             ClickableIcon(
                 imageVector = IconLeft,
                 enabled = lower != null,
                 onClick = {
-                    lower?.let { sizeSettingState.value = it }
+                    lower?.let { thumbnailResolutionSettingState.value = it }
                 },
                 boxModifier = Modifier.size(buttonSize)
             )
 
             Text(
-                text = sizeSettingState.value.displayString,
+                text = thumbnailResolutionSettingState.value.displayString,
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
@@ -132,7 +132,7 @@ private fun SizeSettingSlider(
                 imageVector = IconRight,
                 enabled = higher != null,
                 onClick = {
-                    higher?.let { sizeSettingState.value = it }
+                    higher?.let { thumbnailResolutionSettingState.value = it }
                 },
                 boxModifier = Modifier.size(buttonSize)
             )
@@ -142,7 +142,7 @@ private fun SizeSettingSlider(
 
 @Composable
 private fun QualitySettingSlider(
-    qualitySettingState: MutableState<Quality>
+    compressionQualitySettingState: MutableState<CompressionQuality>
 ) {
 
     Column(
@@ -167,7 +167,7 @@ private fun QualitySettingSlider(
         ) {
 
             Text(
-                text = "QUALITY",
+                text = "COMPRESSION QUALITY",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold
@@ -179,20 +179,20 @@ private fun QualitySettingSlider(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            val lower = qualitySettingState.value.lower()
-            val higher = qualitySettingState.value.higher()
+            val lower = compressionQualitySettingState.value.lower()
+            val higher = compressionQualitySettingState.value.higher()
 
             ClickableIcon(
                 imageVector = IconLeft,
                 enabled = lower != null,
                 onClick = {
-                    lower?.let { qualitySettingState.value = it }
+                    lower?.let { compressionQualitySettingState.value = it }
                 },
                 boxModifier = Modifier.size(buttonSize)
             )
 
             Text(
-                text = qualitySettingState.value.displayString,
+                text = compressionQualitySettingState.value.displayString,
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
@@ -203,7 +203,7 @@ private fun QualitySettingSlider(
                 imageVector = IconRight,
                 enabled = higher != null,
                 onClick = {
-                    higher?.let { qualitySettingState.value = it }
+                    higher?.let { compressionQualitySettingState.value = it }
                 },
                 boxModifier = Modifier.size(buttonSize)
             )

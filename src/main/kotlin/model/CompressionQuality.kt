@@ -1,23 +1,23 @@
 package model
 
 @SuppressWarnings("MagicNumber")
-enum class Size(
-    longSidePx: Int
+enum class CompressionQuality(
+    val percent: Int
 ) {
 
-    MIN(160),
-    LOW(256),
-    MEDIUM(320),
-    GOOD(480),
-    MAX(512);
+    MIN(65),
+    LOW(70),
+    MEDIUM(75),
+    GOOD(80),
+    HIGH(85),
+    MAX(90);
 
     val displayString: String =
-        "$longSidePx x ${longSidePx / 4 * 3}"
+        "$percent%"
 
     fun lower() =
         if (ordinal > 0) entries[ordinal - 1] else null
 
     fun higher() =
         if (ordinal < entries.size - 1) entries[ordinal + 1] else null
-
 }

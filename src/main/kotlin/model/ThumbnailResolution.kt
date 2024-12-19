@@ -1,23 +1,23 @@
 package model
 
 @SuppressWarnings("MagicNumber")
-enum class Quality(
-    val percent: Int
+enum class ThumbnailResolution(
+    longSidePx: Int
 ) {
 
-    MIN(65),
-    LOW(70),
-    MEDIUM(75),
-    GOOD(80),
-    HIGH(85),
-    MAX(90);
+    MIN(160),
+    LOW(256),
+    MEDIUM(320),
+    GOOD(480),
+    MAX(512);
 
     val displayString: String =
-        "$percent%"
+        "$longSidePx x ${longSidePx / 4 * 3}"
 
     fun lower() =
         if (ordinal > 0) entries[ordinal - 1] else null
 
     fun higher() =
         if (ordinal < entries.size - 1) entries[ordinal + 1] else null
+
 }
