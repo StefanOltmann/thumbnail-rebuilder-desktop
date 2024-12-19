@@ -26,6 +26,7 @@ import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
@@ -53,6 +54,7 @@ import ui.icons.IconPhotoStaple
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
 import ui.theme.doubleSpacing
+import ui.theme.halfSpacing
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -103,12 +105,13 @@ fun DropTarget(
                 else
                     Modifier
             )
+            .padding(halfSpacing)
             .drawBehind {
                 drawRoundRect(
                     color = borderColor,
                     style = Stroke(
                         width = if (showTargetBorder) 6f else 4f,
-                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(30f, 15f), 0f)
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(32f, 16f), 8f)
                     ),
                     cornerRadius = CornerRadius(
                         defaultSpacing.toPx()

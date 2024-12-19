@@ -61,9 +61,6 @@ fun main() {
         true
 
     } catch (ignore: Throwable) {
-
-        ignore.printStackTrace()
-
         false
     }
 
@@ -98,7 +95,9 @@ fun main() {
                         ::exitApplication
                     )
 
-                    ContentView(vipsLoaded)
+                    ContentView(
+                        vipsLoaded = vipsLoaded
+                    )
                 }
             }
         }
