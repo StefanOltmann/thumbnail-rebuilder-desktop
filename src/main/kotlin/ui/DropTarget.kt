@@ -96,6 +96,7 @@ fun DropTarget(
                 width = (WINDOW_WIDTH - 64).dp,
                 height = 184.dp
             )
+            .padding(halfSpacing)
             .then(
                 if (showTargetBorder)
                     Modifier.background(
@@ -105,7 +106,6 @@ fun DropTarget(
                 else
                     Modifier
             )
-            .padding(halfSpacing)
             .drawBehind {
                 drawRoundRect(
                     color = borderColor,
