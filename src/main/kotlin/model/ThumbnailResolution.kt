@@ -21,7 +21,7 @@ package model
 
 @SuppressWarnings("MagicNumber")
 enum class ThumbnailResolution(
-    longSidePx: Int
+    val longSidePx: Int
 ) {
 
     MIN(160),

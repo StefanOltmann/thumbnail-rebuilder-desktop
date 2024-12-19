@@ -36,14 +36,14 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import model.CompressionQuality
 import model.ThumbnailResolution
 import ui.theme.DefaultSpacer
@@ -52,6 +52,7 @@ import ui.theme.defaultRoundedCornerShape
 import ui.theme.halfPadding
 import ui.theme.lightGray
 import util.cleanPath
+import util.rebuildThumbnail
 import java.io.File
 
 private const val VIPS_INSTALL_URL = "https://www.libvips.org/install.html"
@@ -61,28 +62,49 @@ fun ContentView(
     vipsLoaded: Boolean
 ) {
 
-    var files by remember { mutableStateOf(emptyList<File>()) }
+    val processingFilesState = remember { mutableStateOf(false) }
 
     val thumbnailResolutionSettingState = remember { mutableStateOf(ThumbnailResolution.GOOD) }
     val compressionQualitySettingState = remember { mutableStateOf(CompressionQuality.GOOD) }
 
+    val scope = rememberCoroutineScope()
+
     val onFilesImport: (List<String>) -> Unit = {
 
-        val tempFiles = mutableListOf<File>()
+        val longSidePx = thumbnailResolutionSettingState.value.longSidePx
+        val quality = compressionQualitySettingState.value.percent
 
-        for (path in it) {
+        scope.launch {
 
-            println("Import: $path")
+            try {
 
-            val file = File(cleanPath(path))
+                processingFilesState.value = true
 
-            println("--> $file")
+                /*
+                 * TODO Recursively work on dropped folders
+                 */
 
-            if (file.isFile)
-                tempFiles.add(file)
+                for (path in it) {
+
+                    val file = File(cleanPath(path))
+
+                    if (file.isFile) {
+
+                        val result = rebuildThumbnail(
+                            file = file,
+                            longSidePx = longSidePx,
+                            quality = quality
+                        )
+
+                        println(file.absolutePath + " -> " + result)
+                    }
+                }
+
+            } finally {
+
+                processingFilesState.value = false
+            }
         }
-
-        files = tempFiles.toList()
     }
 
     Box(
@@ -96,7 +118,16 @@ fun ContentView(
 
             if (vipsLoaded) {
 
-                if (files.isEmpty()) {
+                if (processingFilesState.value) {
+
+                    // TODO Animation
+                    Text(
+                        text = "Processing files...",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                } else {
 
                     DropTarget(onFilesImport)
 
@@ -108,10 +139,6 @@ fun ContentView(
                         thumbnailResolutionSettingState = thumbnailResolutionSettingState,
                         compressionQualitySettingState = compressionQualitySettingState
                     )
-
-                } else {
-
-                    FileList(files)
                 }
 
             } else {

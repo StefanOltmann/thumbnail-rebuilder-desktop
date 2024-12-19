@@ -34,7 +34,7 @@ private val stripMetadata = VipsOption.Enum("strip", 1)
 private const val DEFAULT_TARGET_FORMAT = ".jpg"
 
 @SuppressWarnings("TooGenericExceptionCaught", "kotlin:S6310")
-private suspend fun createThumbnailBytes(
+suspend fun createThumbnailBytes(
     originalBytes: ByteArray,
     longSidePx: Int,
     quality: Int
