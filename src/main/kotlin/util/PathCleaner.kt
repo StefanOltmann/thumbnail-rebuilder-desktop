@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ui.util
+package util
 
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets

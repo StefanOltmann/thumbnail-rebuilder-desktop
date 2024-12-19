@@ -49,7 +49,7 @@ import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.halfPadding
 import ui.theme.lightGray
-import ui.util.cleanPath
+import util.cleanPath
 import java.io.File
 
 @Composable
