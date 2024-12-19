@@ -52,6 +52,7 @@ import ui.theme.defaultRoundedCornerShape
 import ui.theme.halfPadding
 import ui.theme.lightGray
 import util.cleanPath
+import util.findAllFilesRecursive
 import util.rebuildThumbnail
 import java.io.File
 
@@ -71,7 +72,7 @@ fun ContentView(
 
     val scope = rememberCoroutineScope()
 
-    val onFilesImport: (List<String>) -> Unit = {
+    val onFilesImport: (List<String>) -> Unit = { filePaths ->
 
         val longSidePx = thumbnailResolutionSettingState.value.longSidePx
         val quality = compressionQualitySettingState.value.percent
@@ -84,26 +85,19 @@ fun ContentView(
 
                 processingFilesState.value = true
 
-                /*
-                 * TODO Recursively work on dropped folders
-                 */
+                val files = filePaths.map { File(cleanPath(it)) }
 
-                for (path in it) {
+                findAllFilesRecursive(files).collect { file ->
 
-                    val file = File(cleanPath(path))
+                    val result = rebuildThumbnail(
+                        file = file,
+                        longSidePx = longSidePx,
+                        quality = quality,
+                        skipExisting = skipExisting,
+                        preserveModificationDate = preserveModificationDate
+                    )
 
-                    if (file.isFile) {
-
-                        val result = rebuildThumbnail(
-                            file = file,
-                            longSidePx = longSidePx,
-                            quality = quality,
-                            skipExisting = skipExisting,
-                            preserveModificationDate = preserveModificationDate
-                        )
-
-                        println(file.absolutePath + " -> " + result)
-                    }
+                    println(file.absolutePath + " -> " + result)
                 }
 
             } finally {
