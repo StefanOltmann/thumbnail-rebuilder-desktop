@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -46,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import model.CompressionQuality
 import model.ThumbnailResolution
-import ui.theme.DefaultSpacer
 import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.halfPadding
@@ -66,6 +66,8 @@ fun ContentView(
 
     val thumbnailResolutionSettingState = remember { mutableStateOf(ThumbnailResolution.GOOD) }
     val compressionQualitySettingState = remember { mutableStateOf(CompressionQuality.GOOD) }
+    val skipExistingStettingState = remember { mutableStateOf(true) }
+    val preserveModificationDateStettingState = remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
 
@@ -73,6 +75,8 @@ fun ContentView(
 
         val longSidePx = thumbnailResolutionSettingState.value.longSidePx
         val quality = compressionQualitySettingState.value.percent
+        val skipExisting = skipExistingStettingState.value
+        val preserveModificationDate = preserveModificationDateStettingState.value
 
         scope.launch {
 
@@ -93,7 +97,9 @@ fun ContentView(
                         val result = rebuildThumbnail(
                             file = file,
                             longSidePx = longSidePx,
-                            quality = quality
+                            quality = quality,
+                            skipExisting = skipExisting,
+                            preserveModificationDate = preserveModificationDate
                         )
 
                         println(file.absolutePath + " -> " + result)
@@ -113,7 +119,8 @@ fun ContentView(
     ) {
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(32.dp)
         ) {
 
             if (vipsLoaded) {
@@ -133,11 +140,11 @@ fun ContentView(
 
                     DoubleSpacer()
 
-                    DefaultSpacer()
-
                     SettingsPanel(
                         thumbnailResolutionSettingState = thumbnailResolutionSettingState,
-                        compressionQualitySettingState = compressionQualitySettingState
+                        compressionQualitySettingState = compressionQualitySettingState,
+                        skipExistingStettingState = skipExistingStettingState,
+                        preserveModificationDateStettingState = preserveModificationDateStettingState
                     )
                 }
 

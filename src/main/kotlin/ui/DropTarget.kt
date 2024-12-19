@@ -23,9 +23,7 @@ import WINDOW_WIDTH
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -50,10 +48,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.icons.IconDownload
-import ui.icons.IconPhotoStaple
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
-import ui.theme.doubleSpacing
 import ui.theme.halfSpacing
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
@@ -94,7 +90,7 @@ fun DropTarget(
         modifier = Modifier
             .size(
                 width = (WINDOW_WIDTH - 64).dp,
-                height = 184.dp
+                height = 96.dp
             )
             .padding(halfSpacing)
             .then(
@@ -135,26 +131,13 @@ fun DropTarget(
 
         } else {
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(doubleSpacing),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Icon(
-                    imageVector = IconPhotoStaple,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.size(48.dp)
+            Text(
+                text = "Drag & drop your photos here",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
                 )
-
-                Text(
-                    text = "Drag & drop your photos here",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
+            )
         }
     }
 }

@@ -54,8 +54,8 @@ suspend fun rebuildThumbnail(
     file: File,
     longSidePx: Int,
     quality: Int,
-    skipExisting: Boolean = true,
-    preserveModificationDate: Boolean = true
+    skipExisting: Boolean,
+    preserveModificationDate: Boolean
 ): ProcessResult = withContext(Dispatchers.IO) {
 
     try {

@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,12 +42,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import model.CompressionQuality
 import model.ThumbnailResolution
+import ui.icons.IconCheckboxChecked
+import ui.icons.IconCheckboxUnchecked
 import ui.icons.IconLeft
 import ui.icons.IconRight
 import ui.theme.DefaultSpacer
+import ui.theme.DoubleSpacer
+import ui.theme.FillSpacer
 import ui.theme.buttonSize
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
+import ui.theme.doubleSpacing
 import ui.theme.halfPadding
 
 private val settingsBoxWidth = 208.dp
@@ -53,19 +60,97 @@ private val settingsBoxWidth = 208.dp
 @Composable
 fun SettingsPanel(
     thumbnailResolutionSettingState: MutableState<ThumbnailResolution>,
-    compressionQualitySettingState: MutableState<CompressionQuality>
+    compressionQualitySettingState: MutableState<CompressionQuality>,
+    skipExistingStettingState: MutableState<Boolean>,
+    preserveModificationDateStettingState: MutableState<Boolean>
 ) {
 
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(defaultSpacing),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Column {
 
-        SizeSettingBox(thumbnailResolutionSettingState)
+        Column(
+            modifier = Modifier
+                .background(Color.Black, defaultRoundedCornerShape)
+                .width(settingsBoxWidth.times(2).plus(doubleSpacing))
+        ) {
 
-        DefaultSpacer()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(
+                        start = defaultSpacing,
+                        top = defaultSpacing,
+                        end = defaultSpacing,
+                        bottom = 2.dp
+                    )
+            ) {
 
-        QualitySettingBox(compressionQualitySettingState)
+                ClickableIcon(
+                    imageVector = if (skipExistingStettingState.value)
+                        IconCheckboxChecked
+                    else
+                        IconCheckboxUnchecked,
+                    onClick = {
+                        skipExistingStettingState.value = !skipExistingStettingState.value
+                    }
+                )
+
+                DefaultSpacer()
+
+                Text(
+                    text = "Skip existing thumbnails if resolution matches",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.offset(y = -2.dp)
+                )
+
+                FillSpacer()
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(
+                        start = defaultSpacing,
+                        top = 2.dp,
+                        end = defaultSpacing,
+                        bottom = defaultSpacing
+                    )
+            ) {
+
+                ClickableIcon(
+                    imageVector = if (preserveModificationDateStettingState.value)
+                        IconCheckboxChecked
+                    else
+                        IconCheckboxUnchecked,
+                    onClick = {
+                        preserveModificationDateStettingState.value = !preserveModificationDateStettingState.value
+                    }
+                )
+
+                DefaultSpacer()
+
+                Text(
+                    text = "Preserve modification dates",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.offset(y = -2.dp)
+                )
+
+                FillSpacer()
+            }
+        }
+
+        DoubleSpacer()
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(doubleSpacing),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            SizeSettingBox(thumbnailResolutionSettingState)
+
+            QualitySettingBox(compressionQualitySettingState)
+        }
     }
 }
 
