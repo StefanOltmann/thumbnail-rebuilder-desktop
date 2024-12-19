@@ -26,6 +26,9 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.components.resources)
 
+    /* Coroutines */
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+
     /* Metadata read & write */
     implementation("com.ashampoo:kim:0.20.1")
 
