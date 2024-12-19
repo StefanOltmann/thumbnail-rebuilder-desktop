@@ -39,7 +39,20 @@ const val APP_TITLE = "Thumbnail Fixer"
 const val WINDOW_WIDTH = 500
 const val WINDOW_HEIGHT = (WINDOW_WIDTH / 4) * 3
 
+private val isWindows =
+    System.getProperty("os.name").startsWith("Win")
+
 fun main() {
+
+    /*
+     * For Windows we bundle vips, but for macOS
+     * it must be installed using Homebrew.
+     */
+    if (!isWindows) {
+        System.setProperty("vipsffm.libpath.vips.override", "/opt/homebrew/lib/libvips.dylib")
+        System.setProperty("vipsffm.libpath.glib.override", "/opt/homebrew/lib/libglib-2.0.dylib")
+        System.setProperty("vipsffm.libpath.gobject.override", "/opt/homebrew/lib/libgobject-2.0.dylib")
+    }
 
     val vipsLoaded: Boolean = try {
 
@@ -48,6 +61,9 @@ fun main() {
         true
 
     } catch (ignore: Throwable) {
+
+        ignore.printStackTrace()
+
         false
     }
 
