@@ -5,12 +5,12 @@ enum class Quality(
     val percent: Int
 ) {
 
-    LOWEST(65),
-    LOWER(70),
-    LOW(75),
-    MEDIUM(80),
-    GOOD(85),
-    HIGH(90);
+    MIN(65),
+    LOW(70),
+    MEDIUM(75),
+    GOOD(80),
+    HIGH(85),
+    MAX(90);
 
     val displayString: String =
         "$percent%"

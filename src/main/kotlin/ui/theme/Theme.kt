@@ -29,13 +29,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-val minimalRoundedCornerShape = RoundedCornerShape(4.dp)
-
 val defaultRoundedCornerShape = RoundedCornerShape(8.dp)
 
 val defaultSpacing = 8.dp
 val doubleSpacing = defaultSpacing * 2
 val halfSpacing = defaultSpacing / 2
+
+/** Button size as recommended by Material Design */
+val buttonSize = 48.dp
 
 fun Modifier.halfPadding() = this.padding(halfSpacing)
 

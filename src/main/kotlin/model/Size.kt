@@ -6,11 +6,10 @@ enum class Size(
 ) {
 
     MIN(160),
-    MEDIUM(256),
-    GOOD(320),
-    HIGH(480),
-    HIGHER(512),
-    MAX(720);
+    LOW(256),
+    MEDIUM(320),
+    GOOD(480),
+    MAX(512);
 
     val displayString: String =
         "$longSidePx x ${longSidePx / 4 * 3}"

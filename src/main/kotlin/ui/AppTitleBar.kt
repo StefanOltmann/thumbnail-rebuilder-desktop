@@ -24,11 +24,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
@@ -40,15 +38,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowScope
 import androidx.compose.ui.window.WindowState
 import ui.icons.AppIcon
 import ui.icons.IconClose
 import ui.icons.IconDonate
-import ui.icons.IconMaximize
 import ui.icons.IconMinimize
 import ui.icons.MadeByGraphic
+import ui.theme.DoubleSpacer
 import ui.theme.FillSpacer
 import ui.theme.halfSpacing
 
@@ -99,9 +96,7 @@ fun WindowScope.AppTitleBar(
                     .offset(y = 1.dp)
             )
 
-            Spacer(
-                modifier = Modifier.width(32.dp)
-            )
+            DoubleSpacer()
 
             ClickableIcon(
                 imageVector = IconDonate,
@@ -114,17 +109,6 @@ fun WindowScope.AppTitleBar(
                 imageVector = IconMinimize,
                 onClick = {
                     windowState.isMinimized = true
-                }
-            )
-
-            ClickableIcon(
-                imageVector = IconMaximize,
-                onClick = {
-
-                    if (windowState.placement != WindowPlacement.Maximized)
-                        windowState.placement = WindowPlacement.Maximized
-                    else
-                        windowState.placement = WindowPlacement.Floating
                 }
             )
 

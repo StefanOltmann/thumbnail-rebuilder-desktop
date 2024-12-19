@@ -13,8 +13,8 @@ val IconRight: ImageVector
         }
         _IconRight = ImageVector.Builder(
             name = "IconRight",
-            defaultWidth = 48.dp,
-            defaultHeight = 48.dp,
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
             viewportWidth = 960f,
             viewportHeight = 960f
         ).apply {

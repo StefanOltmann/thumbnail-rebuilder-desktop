@@ -91,8 +91,8 @@ fun DropTarget(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(
-                width = (WINDOW_WIDTH - 32).dp,
-                height = 240.dp
+                width = (WINDOW_WIDTH - 64).dp,
+                height = 184.dp
             )
             .then(
                 if (showTargetBorder)

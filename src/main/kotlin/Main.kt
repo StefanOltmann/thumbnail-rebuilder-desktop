@@ -32,12 +32,11 @@ import ui.ContentView
 import ui.theme.AppTypography
 import ui.theme.appColorScheme
 import ui.theme.defaultRoundedCornerShape
-import java.awt.Dimension
 
 const val APP_TITLE = "Thumbnail Fixer"
 
-const val WINDOW_WIDTH = 600
-const val WINDOW_HEIGHT = 450
+const val WINDOW_WIDTH = 500
+const val WINDOW_HEIGHT = (WINDOW_WIDTH / 4) * 3
 
 fun main() = application {
 
@@ -50,11 +49,10 @@ fun main() = application {
         title = APP_TITLE,
         undecorated = true,
         transparent = true,
-        // resizable = false,
+        resizable = false,
         state = windowState
     ) {
 
-        this.window.minimumSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
 
         MaterialTheme(
             colorScheme = appColorScheme,
@@ -72,7 +70,7 @@ fun main() = application {
                     ::exitApplication
                 )
 
-                    ContentView()
+                ContentView()
             }
         }
     }

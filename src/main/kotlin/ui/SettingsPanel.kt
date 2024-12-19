@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -42,12 +43,12 @@ import model.Size
 import ui.icons.IconLeft
 import ui.icons.IconRight
 import ui.theme.DefaultSpacer
+import ui.theme.buttonSize
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
-import ui.theme.doublePadding
 import ui.theme.halfPadding
 
-private val settingsBoxWidth = 272.dp
+private val settingsBoxWidth = 208.dp
 
 @Composable
 fun SettingsPanel(
@@ -97,15 +98,14 @@ private fun SizeSettingSlider(
             Text(
                 text = "SIZE",
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.titleLarge.copy(
+                style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold
                 )
             )
         }
 
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.doublePadding()
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             val lower = sizeSettingState.value.lower()
@@ -116,13 +116,14 @@ private fun SizeSettingSlider(
                 enabled = lower != null,
                 onClick = {
                     lower?.let { sizeSettingState.value = it }
-                }
+                },
+                boxModifier = Modifier.size(buttonSize)
             )
 
             Text(
                 text = sizeSettingState.value.displayString,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.displayMedium,
+                style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1F)
             )
@@ -132,7 +133,8 @@ private fun SizeSettingSlider(
                 enabled = higher != null,
                 onClick = {
                     higher?.let { sizeSettingState.value = it }
-                }
+                },
+                boxModifier = Modifier.size(buttonSize)
             )
         }
     }
@@ -167,15 +169,14 @@ private fun QualitySettingSlider(
             Text(
                 text = "QUALITY",
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.titleLarge.copy(
+                style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold
                 )
             )
         }
 
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.doublePadding()
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             val lower = qualitySettingState.value.lower()
@@ -186,13 +187,14 @@ private fun QualitySettingSlider(
                 enabled = lower != null,
                 onClick = {
                     lower?.let { qualitySettingState.value = it }
-                }
+                },
+                boxModifier = Modifier.size(buttonSize)
             )
 
             Text(
                 text = qualitySettingState.value.displayString,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.displayMedium,
+                style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1F)
             )
@@ -202,7 +204,8 @@ private fun QualitySettingSlider(
                 enabled = higher != null,
                 onClick = {
                     higher?.let { qualitySettingState.value = it }
-                }
+                },
+                boxModifier = Modifier.size(buttonSize)
             )
         }
     }
