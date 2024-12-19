@@ -61,16 +61,16 @@ fun SettingsPanel(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        SizeSettingSlider(thumbnailResolutionSettingState)
+        SizeSettingBox(thumbnailResolutionSettingState)
 
         DefaultSpacer()
 
-        QualitySettingSlider(compressionQualitySettingState)
+        QualitySettingBox(compressionQualitySettingState)
     }
 }
 
 @Composable
-private fun SizeSettingSlider(
+private fun SizeSettingBox(
     thumbnailResolutionSettingState: MutableState<ThumbnailResolution>
 ) {
 
@@ -141,7 +141,7 @@ private fun SizeSettingSlider(
 }
 
 @Composable
-private fun QualitySettingSlider(
+private fun QualitySettingBox(
     compressionQualitySettingState: MutableState<CompressionQuality>
 ) {
 
