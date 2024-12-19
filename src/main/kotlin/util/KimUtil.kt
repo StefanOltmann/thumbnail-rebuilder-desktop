@@ -21,6 +21,8 @@ package util
 
 import com.ashampoo.kim.Kim
 import com.ashampoo.kim.common.ImageWriteException
+import com.ashampoo.kim.format.jpeg.JpegImageParser
+import com.ashampoo.kim.input.ByteArrayByteReader
 import com.ashampoo.kim.model.ImageFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -51,7 +53,9 @@ enum class ProcessResult {
 suspend fun rebuildThumbnail(
     file: File,
     longSidePx: Int,
-    quality: Int
+    quality: Int,
+    skipExisting: Boolean = true,
+    preserveModificationDate: Boolean = true
 ): ProcessResult = withContext(Dispatchers.IO) {
 
     try {
@@ -61,8 +65,22 @@ suspend fun rebuildThumbnail(
         val metadata = Kim.readMetadata(originalBytes)
 
         /* Check first if we can process this format. */
-        if (supportedImageFormats.contains(metadata?.imageFormat))
+        if (!supportedImageFormats.contains(metadata?.imageFormat))
             return@withContext ProcessResult.UNSUPPORTED_FORMAT
+
+        if (skipExisting) {
+
+            val existingThumbnailBytes = metadata?.getExifThumbnailBytes()
+
+            val thumbnailImageSize = existingThumbnailBytes?.let {
+                JpegImageParser.getImageSize(
+                    ByteArrayByteReader(existingThumbnailBytes)
+                )
+            }
+
+            if (thumbnailImageSize != null && longSidePx >= thumbnailImageSize.longestSide)
+                return@withContext ProcessResult.ALREADY_UP_TO_DATE
+        }
 
         var newBytes: ByteArray? = null
 
@@ -107,7 +125,10 @@ suspend fun rebuildThumbnail(
         if (newBytes == null)
             return@withContext ProcessResult.FAILED
 
-        val lastModified = file.lastModified()
+        val lastModified = if (preserveModificationDate)
+            file.lastModified()
+        else
+            0
 
         val tempFile = File(file.absolutePath + ".tmp")
 
@@ -121,7 +142,8 @@ suspend fun rebuildThumbnail(
                 error("Failed to replace $file")
 
             /* Restore last modified date */
-            file.setLastModified(lastModified)
+            if (preserveModificationDate)
+                file.setLastModified(lastModified)
 
         } finally {
 
