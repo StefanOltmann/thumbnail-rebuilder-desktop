@@ -21,6 +21,7 @@ package ui
 
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.defaultScrollbarStyle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import model.CompressionQuality
 import model.ThumbnailResolution
@@ -52,8 +54,12 @@ import ui.theme.lightGray
 import util.cleanPath
 import java.io.File
 
+private const val VIPS_INSTALL_URL = "https://www.libvips.org/install.html"
+
 @Composable
-fun ContentView() {
+fun ContentView(
+    vipsLoaded: Boolean
+) {
 
     var files by remember { mutableStateOf(emptyList<File>()) }
 
@@ -88,22 +94,46 @@ fun ContentView() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            if (files.isEmpty()) {
+            if (vipsLoaded) {
 
-                DropTarget(onFilesImport)
+                if (files.isEmpty()) {
 
-                DoubleSpacer()
+                    DropTarget(onFilesImport)
 
-                DefaultSpacer()
+                    DoubleSpacer()
 
-                SettingsPanel(
-                    thumbnailResolutionSettingState = thumbnailResolutionSettingState,
-                    compressionQualitySettingState = compressionQualitySettingState
-                )
+                    DefaultSpacer()
+
+                    SettingsPanel(
+                        thumbnailResolutionSettingState = thumbnailResolutionSettingState,
+                        compressionQualitySettingState = compressionQualitySettingState
+                    )
+
+                } else {
+
+                    FileList(files)
+                }
 
             } else {
 
-                FileList(files)
+                Text(
+                    text = "Please install libvips!",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+                DoubleSpacer()
+
+                val uriHandler = LocalUriHandler.current
+
+                Text(
+                    text = VIPS_INSTALL_URL,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri(VIPS_INSTALL_URL)
+                    }
+                )
             }
         }
     }

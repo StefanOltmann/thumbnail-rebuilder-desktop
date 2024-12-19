@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import app.photofox.vipsffm.Vips
 import ui.AppTitleBar
 import ui.ContentView
 import ui.theme.AppTypography
@@ -38,39 +39,51 @@ const val APP_TITLE = "Thumbnail Fixer"
 const val WINDOW_WIDTH = 500
 const val WINDOW_HEIGHT = (WINDOW_WIDTH / 4) * 3
 
-fun main() = application {
+fun main() {
 
-    val windowState = rememberWindowState(
-        size = DpSize(WINDOW_WIDTH.dp, WINDOW_HEIGHT.dp)
-    )
+    val vipsLoaded: Boolean = try {
 
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = APP_TITLE,
-        undecorated = true,
-        transparent = true,
-        resizable = false,
-        state = windowState
-    ) {
+        Vips.init()
 
+        true
 
-        MaterialTheme(
-            colorScheme = appColorScheme,
-            typography = AppTypography()
+    } catch (ignore: Throwable) {
+        false
+    }
+
+    application {
+
+        val windowState = rememberWindowState(
+            size = DpSize(WINDOW_WIDTH.dp, WINDOW_HEIGHT.dp)
+        )
+
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = APP_TITLE,
+            undecorated = true,
+            transparent = true,
+            resizable = false,
+            state = windowState
         ) {
 
-            Column(
-                modifier = Modifier
-                    .clip(defaultRoundedCornerShape)
-                    .background(MaterialTheme.colorScheme.background)
+            MaterialTheme(
+                colorScheme = appColorScheme,
+                typography = AppTypography()
             ) {
 
-                AppTitleBar(
-                    windowState,
-                    ::exitApplication
-                )
+                Column(
+                    modifier = Modifier
+                        .clip(defaultRoundedCornerShape)
+                        .background(MaterialTheme.colorScheme.background)
+                ) {
 
-                ContentView()
+                    AppTitleBar(
+                        windowState,
+                        ::exitApplication
+                    )
+
+                    ContentView(vipsLoaded)
+                }
             }
         }
     }
