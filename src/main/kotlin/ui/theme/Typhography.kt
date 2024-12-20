@@ -24,11 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import de.stefan_oltmann.thumbnail_fixer.generated.resources.Res
-import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_bold
-import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_bold_italic
-import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_italic
-import de.stefan_oltmann.thumbnail_fixer.generated.resources.economica_regular
+import io.github.stefanoltmann.thumbnail_fixer.generated.resources.Res
+import io.github.stefanoltmann.thumbnail_fixer.generated.resources.economica_bold
+import io.github.stefanoltmann.thumbnail_fixer.generated.resources.economica_bold_italic
+import io.github.stefanoltmann.thumbnail_fixer.generated.resources.economica_italic
+import io.github.stefanoltmann.thumbnail_fixer.generated.resources.economica_regular
 import org.jetbrains.compose.resources.Font
 
 @Composable
