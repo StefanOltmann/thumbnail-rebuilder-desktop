@@ -21,6 +21,7 @@ package ui
 
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.defaultScrollbarStyle
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -50,7 +52,9 @@ import model.CompressionQuality
 import model.ThumbnailResolution
 import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
+import ui.theme.defaultSpacing
 import ui.theme.halfPadding
+import ui.theme.halfSpacing
 import ui.theme.lightGray
 import util.ProcessResult
 import util.cleanPath
@@ -70,10 +74,10 @@ fun ContentView(
     val thumbnailResolutionSettingState = remember { mutableStateOf(ThumbnailResolution.GOOD) }
     val compressionQualitySettingState = remember { mutableStateOf(CompressionQuality.GOOD) }
     val skipExistingStettingState = remember { mutableStateOf(true) }
-    val preserveModificationDateStettingState = remember { mutableStateOf(false) }
+    val preserveModificationDateStettingState = remember { mutableStateOf(true) }
 
     val counter = remember { mutableStateOf(0) }
-    val resultsMap = remember { mutableMapOf<String, ProcessResult>() }
+    val resultsMap = remember { mutableStateMapOf<String, ProcessResult>() }
 
     val scope = rememberCoroutineScope()
 
@@ -93,6 +97,10 @@ fun ContentView(
                 val files = filePaths.map { File(cleanPath(it)) }
 
                 findAllFilesRecursive(files).collect { file ->
+
+                    /* Ignore XMP sidecars and don't count them. */
+                    if (file.name.endsWith(".xmp", ignoreCase = true))
+                        return@collect
 
                     val result = rebuildThumbnail(
                         file = file,
@@ -128,10 +136,7 @@ fun ContentView(
 
             if (vipsLoaded) {
 
-                if (processingFilesState.value || resultsMap.isNotEmpty()) {
-
-                    val successCount = derivedStateOf { resultsMap.count { it.value == ProcessResult.SUCCESS } }
-                    val failedCount = derivedStateOf { resultsMap.count { it.value == ProcessResult.FAILED } }
+                if (processingFilesState.value) {
 
                     // TODO Animation
                     Text(
@@ -140,11 +145,39 @@ fun ContentView(
                         style = MaterialTheme.typography.titleLarge
                     )
 
+                    DoubleSpacer()
+
                     Text(
-                        text = "Count: ${counter.value}",
+                        text = "${counter.value}",
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleLarge
                     )
+
+                } else if (resultsMap.isNotEmpty()) {
+
+                    val successCount = derivedStateOf {
+                        resultsMap.count {
+                            it.value == ProcessResult.SUCCESS || it.value == ProcessResult.SUCCESS_WITH_REDUCED_QUALITY
+                        }
+                    }
+
+                    val skippedCount = derivedStateOf {
+                        resultsMap.count { it.value == ProcessResult.ALREADY_UP_TO_DATE }
+                    }
+
+                    val unsupportedCount = derivedStateOf {
+                        resultsMap.count { it.value == ProcessResult.UNSUPPORTED_FORMAT }
+                    }
+
+                    val failedCount = derivedStateOf { resultsMap.count { it.value == ProcessResult.FAILED } }
+
+                    Text(
+                        text = "Processed ${counter.value} files",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                    DoubleSpacer()
 
                     Text(
                         text = "${successCount.value} successful",
@@ -152,12 +185,48 @@ fun ContentView(
                         style = MaterialTheme.typography.titleLarge
                     )
 
+                    Text(
+                        text = "${skippedCount.value} already up to date",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+
+                    Text(
+                        text = "${unsupportedCount.value} unsupported",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge
+                    )
 
                     Text(
                         text = "${failedCount.value} failed",
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.titleLarge
                     )
+
+                    DoubleSpacer()
+
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                1.dp,
+                                MaterialTheme.colorScheme.onBackground,
+                                defaultRoundedCornerShape
+                            )
+                            .padding(
+                                horizontal = defaultSpacing,
+                                vertical = halfSpacing
+                            )
+                            .clickable {
+                                resultsMap.clear()
+                            }
+                    ) {
+
+                        Text(
+                            text = "Clear results",
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
 
                 } else {
 
