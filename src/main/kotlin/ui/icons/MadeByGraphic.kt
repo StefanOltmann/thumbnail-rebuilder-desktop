@@ -1,7 +1,7 @@
 /*
  * 🔧 Thumbnail Fixer 🔧
  * Copyright (C) 2024 Stefan Oltmann
- * https://stefan-oltmann.de/thumbnail-fixer
+ * https://github.com/StefanOltmann/thumbnail-fixer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
