@@ -72,7 +72,7 @@ fun ContentView(
     val processingFilesState = remember { mutableStateOf(false) }
 
     val thumbnailResolutionSettingState = remember { mutableStateOf(ThumbnailResolution.GOOD) }
-    val compressionQualitySettingState = remember { mutableStateOf(CompressionQuality.GOOD) }
+    val compressionQualitySettingState = remember { mutableStateOf(CompressionQuality.MAX) }
     val skipExistingStettingState = remember { mutableStateOf(true) }
     val preserveModificationDateStettingState = remember { mutableStateOf(true) }
 
