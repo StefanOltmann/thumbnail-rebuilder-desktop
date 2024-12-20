@@ -45,10 +45,7 @@ dependencies {
     implementation("com.ashampoo:kim:0.20.1")
 
     /* VIPS */
-    implementation("app.photofox.vips-ffm:vips-ffm-core:1.3.0")
-
-    /* Conveyor API */
-    implementation("dev.hydraulic.conveyor:conveyor-control:1.1")
+    implementation("app.photofox.vips-ffm:vips-ffm-core:1.4.0")
 
     /* Conveyor */
     linuxAmd64(compose.desktop.linux_x64)

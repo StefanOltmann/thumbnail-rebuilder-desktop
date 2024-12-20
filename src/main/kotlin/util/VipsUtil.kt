@@ -20,14 +20,13 @@
 package util
 
 import app.photofox.vipsffm.VImage
+import app.photofox.vipsffm.VSource
 import app.photofox.vipsffm.Vips
 import app.photofox.vipsffm.VipsOption
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
-import kotlin.math.max
-import kotlin.math.round
 
 private val stripMetadata = VipsOption.Enum("strip", 1)
 
@@ -48,15 +47,18 @@ suspend fun createThumbnailBytes(
 
             Vips.run { arena ->
 
-                val sourceImage = VImage.newFromBytes(arena, originalBytes)
+                val source = VSource.newFromBytes(arena, originalBytes)
 
-                val resizeFactor: Double =
-                    longSidePx / max(sourceImage.width.toDouble(), sourceImage.height.toDouble())
-
-                @Suppress("MagicNumber")
-                val thumbnailWidth = max(1, round(resizeFactor * sourceImage.width + 0.3).toInt())
-
-                val thumbnail = sourceImage.thumbnailImage(thumbnailWidth)
+                /*
+                 * Use thumbnailSource() because it has a
+                 * slightly better quality than thumbnailImage()
+                 */
+                val thumbnail = VImage.thumbnailSource(
+                    arena,
+                    source,
+                    longSidePx,
+                    VipsOption.Int("height", longSidePx)
+                )
 
                 val outputStream = ByteArrayOutputStream()
 
