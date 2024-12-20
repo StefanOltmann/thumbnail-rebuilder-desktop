@@ -7,7 +7,7 @@ plugins {
     id("dev.hydraulic.conveyor") version "1.12"
 }
 
-group = "de.stefan-oltmann"
+group = "io.github.stefanoltmann"
 version = "1.0.0"
 
 repositories {
@@ -55,7 +55,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "🔧 Thumbnail Fixer 🔧"
+            packageName = "Thumbnail Fixer"
             packageVersion = version.toString()
         }
     }
