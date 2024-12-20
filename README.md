@@ -4,6 +4,12 @@
 
 This is a tool to repair embedded thumbnails in images.
 
+## Acknowledgements
+
+* JetBrains for making [Kotlin](https://kotlinlang.org).
+* John Cupitt for making [libvips](https://github.com/libvips/).
+* carrot for making [vips-ffm](https://github.com/lopcode/vips-ffm).
+
 ## Contributions
 
 Contributions to this project are welcome! If you encounter any issues,
