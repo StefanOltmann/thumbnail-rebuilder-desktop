@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build
@@ -25,8 +28,6 @@ jobs:
           ./gradlew build
       - name: Run Conveyor
         uses: hydraulic-software/conveyor/actions/build@v16.0
-        permissions:
-          contents: write
         env:
           OAUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
