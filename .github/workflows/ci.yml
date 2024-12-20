@@ -24,7 +24,7 @@ jobs:
           chmod +x gradlew
           ./gradlew build
       - name: Run Conveyor
-        uses: hydraulic-software/conveyor/actions/build@v9.2
+        uses: hydraulic-software/conveyor/actions/build@v16.0
         env:
           OAUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
