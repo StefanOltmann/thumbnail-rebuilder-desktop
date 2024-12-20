@@ -4,11 +4,21 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("me.qoomon.git-versioning") version "6.4.3"
     id("dev.hydraulic.conveyor") version "1.12"
 }
 
 group = "io.github.stefanoltmann"
 version = "1.0.0"
+
+gitVersioning.apply {
+
+    refs {
+        tag("v(?<version>.*)") {
+            version = "\${ref.version}"
+        }
+    }
+}
 
 repositories {
     mavenCentral()
