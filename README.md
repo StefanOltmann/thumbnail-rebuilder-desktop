@@ -9,6 +9,7 @@ This is a tool to repair embedded thumbnails in images.
 * JetBrains for making [Kotlin](https://kotlinlang.org).
 * John Cupitt for making [libvips](https://github.com/libvips/).
 * carrot for making [vips-ffm](https://github.com/lopcode/vips-ffm).
+* Mike Hearn for making [Hydraulic Conveyor](https://hydraulic.dev/)
 
 ## Contributions
 
