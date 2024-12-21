@@ -39,17 +39,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import com.ashampoo.kim.Kim
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.CompressionQuality
 import model.ThumbnailResolution
+import org.jetbrains.skia.Image
 import ui.theme.DoubleSpacer
 import ui.theme.defaultRoundedCornerShape
 import ui.theme.defaultSpacing
@@ -78,6 +84,8 @@ fun ContentView(
 
     val counter = remember { mutableStateOf(0) }
     val resultsMap = remember { mutableStateMapOf<String, ProcessResult>() }
+
+    val images = remember { mutableStateListOf<ImageBitmap>() }
 
     val scope = rememberCoroutineScope()
 
@@ -114,6 +122,24 @@ fun ContentView(
 
                     counter.value = counter.value + 1
 
+                    if (result.isSuccess()) {
+
+                        val originalBytes = file.readBytes()
+
+                        val metadata = Kim.readMetadata(originalBytes)
+
+                        val exifBytes = metadata!!.getExifThumbnailBytes()!!
+
+                        val image = Image.makeFromEncoded(exifBytes).toComposeImageBitmap()
+
+                        if (images.size > 5)
+                            images.removeAt(0)
+
+                        images.add(image)
+
+                        delay(2000)
+                    }
+
                     println(file.absolutePath + " -> " + result)
                 }
 
@@ -138,28 +164,13 @@ fun ContentView(
 
                 if (processingFilesState.value) {
 
-                    // TODO Animation
-                    Text(
-                        text = "Processing files...",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                    /* Entertain with a nice photo stack animation while we are working. */
 
-                    DoubleSpacer()
-
-                    Text(
-                        text = "${counter.value}",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                    AnimatedPhotoStack(images)
 
                 } else if (resultsMap.isNotEmpty()) {
 
-                    val successCount = derivedStateOf {
-                        resultsMap.count {
-                            it.value == ProcessResult.SUCCESS || it.value == ProcessResult.SUCCESS_WITH_REDUCED_QUALITY
-                        }
-                    }
+                    val successCount = derivedStateOf { resultsMap.count { it.value.isSuccess() } }
 
                     val skippedCount = derivedStateOf {
                         resultsMap.count { it.value == ProcessResult.ALREADY_UP_TO_DATE }

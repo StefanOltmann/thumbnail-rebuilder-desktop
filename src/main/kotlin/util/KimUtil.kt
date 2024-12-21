@@ -47,7 +47,10 @@ enum class ProcessResult {
     SUCCESS_WITH_REDUCED_QUALITY,
 
     /* Failed */
-    FAILED
+    FAILED;
+
+    fun isSuccess() =
+        this == SUCCESS || this == SUCCESS_WITH_REDUCED_QUALITY
 }
 
 suspend fun rebuildThumbnail(
